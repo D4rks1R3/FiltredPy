@@ -1,34 +1,39 @@
 import re
 import requests
-
-url = "http://files.cedrotech.com/tickbytick/Bmf/20190109.log"
-r = requests.get('http://127.0.0.1/logs.log')
-t = str(r.text)
+import time
 tex = 'tst.txt'
 
-whi = open(tex,"w+")
-whi.write(t)
-whi.close()
+def down():
+   print('Inicio  >>', time.strftime('%H:%M:%S')+'\n')
+   url = "http://files.cedrotech.com/tickbytick/Bmf/20190109.log"
+   r = requests.get(url)
+   t = str(r.text)
+   tex = 'tst.txt'
+   whi = open(tex,"a+")
+   whi.write(t)
+   whi.close()
+   print("COMPLETO!")
+   print("FIM >>", time.strftime('%H:%M:%S')+'\n')
 
 def separador():
-   file = open(tex, "r")
+   file = open("tst.txt", "r")
    ler = file.readlines()
-
-#lê e separa as strings
    for i in ler:
       a = i.split("|", 1)
       f, b = a
-      if f == "TF2Z99":
+      if f == "WING19":
          fi = open("win.txt", "a+")
-         fi.write(str(a)+'\n')
+         fi.writelines(str(a)+'\n')
          fi.close()
       if f == "WDOG19":
-         fj = open("wnd.txt", "a+")
-         fj.write(str(a)+'\n')
+         fj = open("wdg.txt", "a+")
+         fj.writelines(str(a)+'\n')
          fj.close()
-   file.close()
-separador()
 
+   file.close()
+
+down()
+separador()
 
 """
 def organizar_alfabeticamente(lista):
@@ -39,8 +44,6 @@ def organizar_alfabeticamente(lista):
          
          if lista[x] < lista[y]:
             lista[x], lista[y] = lista[y], lista[x]
-
-
 lista = ["h", "g", "g",  "f"]
 print ("Antes:", lista)
 organizar_alfabeticamente(lista)
