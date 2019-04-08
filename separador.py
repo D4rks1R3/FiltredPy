@@ -2,6 +2,7 @@
 import re
 import requests
 import time
+import os
 tex = 'tst.txt'
 
 def down():
@@ -17,28 +18,36 @@ def down():
    print("FIM >>", time.strftime('%H:%M:%S')+'\n')
 
 def separador():
-   file = open("20190109.log", "r+")
-   ler = file.readlines()
-   for i in ler:
-      a = i.split("|", 4)
-      b = a[0:4]
-      t, k = a[0:2]
-        
-      if t == 'WING19':
-         print(b)
-               
-         fi = open("win.txt", "a+")
-         fi.writelines(str(b)+'\n')
-         fi.close()
-         
-      if t == 'WDOG19':
-         print(b)
+   try:
+       com = str(input("arquivo .log: "))   
+       file = open(com, "r+")
+       ler = file.readlines()
+       for i in ler:
+         a = i.split("|", 4)
+         p, b, o, m  = a[0:4]
+         tt = b.replace("-", ".")
+         t, k = a[0:2]
+         tr = t[0:3]
                   
-         fj = open("wdg.txt", "a+")
-         fj.writelines(str(b)+'\n')
-         fj.close()
-   file.close()
+         total = p[0:4]+","+tt+',,,'+o+','+m
+        
+         if tr == 'WIN':
+               print(total)
+               fi = open("win.txt", "a+")
+               fi.writelines(str(total)+'\n')
+               fi.close()
+         
+         if tr == 'WDO':
+               print(total)          
+               fj = open("wdo.txt", "a+")
+               fj.writelines(str(total)+'\n')
+               fj.close()
 
+         file.close()
+        
+   except Exception as e:
+         print("Erro encontrado!")
+         os.system("pause")
 
 separador()
 
